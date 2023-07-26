@@ -14,7 +14,10 @@ class Test {
 //            'Минск',
 //        );
 
-        print_r($humansStore->search()->where('id', '<=', 2)->where('id', '>', 1)->execute());
-        print_r($humansStore->search()->execute());
+        print_r($humansStore->search()->where('id', '<=', 2)->where('id', '>', 1)->get());
+        print_r($humansStore->search()->get());
+
+        $humansStore->search()->where('id', '=', 1)->delete();
+
     }
 }

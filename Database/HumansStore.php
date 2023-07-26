@@ -15,7 +15,7 @@ class HumansStore {
     public function add(String $name, String $surname, int $birthday, int $sex, String $city) :int {
         $nexId = $this->getNextId();
         $this->store[$nexId] = new HumanItem($nexId, $name, $surname, $birthday, $sex, $city);
-        file_put_contents('Store/' . $this->storeName . '.json', json_encode($this->store));
+        $this->saveStore();
         return $nexId;
     }
 
@@ -23,8 +23,23 @@ class HumansStore {
         return new SearchController($this);
     }
 
-    public function delete() {
+    public function delete($data) :bool {
+        $deleteKeys = array_keys($data);
 
+        $outvalue = [];
+        foreach($this->store AS $key => $item) {
+            if(!in_array($key, $deleteKeys)) {
+                $outvalue[$key] = $item;
+            }
+        }
+        $this->store = $outvalue;
+        $this->saveStore();
+
+        return true;
+    }
+
+    private function saveStore() {
+        file_put_contents('Store/' . $this->storeName . '.json', json_encode($this->store));
     }
 
     private function getNextId() :int {

@@ -42,7 +42,7 @@ class SearchController {
         return $this;
     }
 
-    public function execute() :array {
+    public function get() :array {
         $outdata = [];
 
         foreach($this->searchResult AS $key => $value) {
@@ -57,6 +57,10 @@ class SearchController {
         }
 
         return $outdata;
+    }
+
+    public function delete() :bool {
+        return $this->humansStore->delete($this->searchResult);
     }
 
     private function checkField($field) :void {
