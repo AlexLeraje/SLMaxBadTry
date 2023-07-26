@@ -2,8 +2,6 @@
 
 namespace Database;
 
-use HumanItem;
-
 class Human extends HumanItem {
 
     public function getAge() :int {
