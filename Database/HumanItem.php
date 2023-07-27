@@ -2,7 +2,7 @@
 
 namespace Database;
 
-class HumanItem {
+Abstract class HumanItem {
     public function __construct(
         public int $id,
         public String $name,

@@ -13,10 +13,9 @@ class HumansStore {
     }
 
     public function add(...$arguments) :int {
-        print_r($arguments);
         $nexId = $this->getNextId();
         array_unshift($arguments, $nexId);
-        $this->store[$nexId] = new HumanItem(...$arguments);
+        $this->store[$nexId] = new HumanValidation(...$arguments);
         $this->saveStore();
         return $nexId;
     }
