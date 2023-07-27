@@ -12,18 +12,24 @@ class HumansStore {
         }
     }
 
-    public function add(String $name, String $surname, int $birthday, int $sex, String $city) :int {
+    public function add(...$arguments) :int {
+        print_r($arguments);
         $nexId = $this->getNextId();
-        $this->store[$nexId] = new HumanItem($nexId, $name, $surname, $birthday, $sex, $city);
+        array_unshift($arguments, $nexId);
+        $this->store[$nexId] = new HumanItem(...$arguments);
         $this->saveStore();
         return $nexId;
+    }
+
+    public function delete($humanId) :bool {
+        return $this->search()->where('id', '=', $humanId)->delete();
     }
 
     public function search() :SearchController {
         return new SearchController($this);
     }
 
-    public function delete($data) :bool {
+    public function deleteByCondition($data) :bool {
         $deleteKeys = array_keys($data);
 
         $outvalue = [];

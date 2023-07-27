@@ -44,23 +44,21 @@ class SearchController {
 
     public function get() :array {
         $outdata = [];
+        $allowedFields = array_keys(get_class_vars('Database\HumanItem'));
 
         foreach($this->searchResult AS $key => $value) {
-            $outdata[$key] = new Human(
-                $value->id,
-                $value->name,
-                $value->surname,
-                $value->birthday,
-                $value->sex,
-                $value->city,
-            );
+            $arguments = [];
+            foreach ($allowedFields AS $item) {
+                $arguments[$item] = $value->$item;
+            }
+            $outdata[$key] = new Human(...$arguments);
         }
 
         return $outdata;
     }
 
     public function delete() :bool {
-        return $this->humansStore->delete($this->searchResult);
+        return $this->humansStore->deleteByCondition($this->searchResult);
     }
 
     private function checkField($field) :void {
